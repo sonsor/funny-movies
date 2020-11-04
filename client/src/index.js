@@ -1,13 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter as Router, Route} from "react-router-dom";
+import 'antd/dist/antd.css';
+
+const Root = () => {
+  return (
+      <React.StrictMode>
+        <Router>
+          <Route path="/" component={App}/>
+        </Router>
+    </React.StrictMode>
+  )
+}
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Root />,
   document.getElementById('root')
 );
 
