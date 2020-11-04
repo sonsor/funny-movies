@@ -16,16 +16,17 @@ export class AuthService {
         let user = await this.userService.findOne(username);
         if (user) {
             if (compareSync(pass, user.password)) {
-                const { password, salt, ...result } = user
+                const { password, salt, ...result } = user.toObject()
                 return result;
             } else {
                 return null
             }
         } else {
-            user = await this.register({
-                username,
-                password: pass
-            })
+
+            const data = new RegisterDto()
+            data.username = username
+            data.password = pass
+            user = await this.userService.create(data)
 
             const { password, salt, ...result } = user
             return result;
@@ -39,9 +40,4 @@ export class AuthService {
             access_token: this.jwtService.sign(payload),
         };
     }
-
-    async register(data: RegisterDto): Promise<User> {
-        return await this.userService.create(data)
-    }
-
 }

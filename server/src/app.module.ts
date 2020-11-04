@@ -6,6 +6,7 @@ import configuration from './config/configuration';
 import { DatabaseModule } from './core/database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { VideosModule } from './videos/videos.module';
 
 
 @Module({
@@ -16,7 +17,8 @@ import { UserModule } from './user/user.module';
     }),
     DatabaseModule,
     AuthModule,
-    UserModule
+    UserModule,
+    VideosModule
   ],
   controllers: [AppController],
   providers: [AppService],
