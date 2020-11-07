@@ -3,14 +3,20 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router, Route} from "react-router-dom";
+import configureStore from './store'
+import {Provider} from 'react-redux'
+import state from './store/state'
 import 'antd/dist/antd.css';
+const store = configureStore(state)
 
 const Root = () => {
   return (
       <React.StrictMode>
-        <Router>
-          <Route path="/" component={App}/>
-        </Router>
+        <Provider store={store}>
+            <Router>
+              <Route path="/" component={App}/>
+            </Router>
+        </Provider>
     </React.StrictMode>
   )
 }

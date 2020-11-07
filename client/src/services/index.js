@@ -1,7 +1,7 @@
 import { Http } from '../utils/http'
 import config from '../config'
 import {VideosService} from "./videos.service";
-
+import {AuthService} from "./auth.service";
 
 class Services {
 
@@ -14,9 +14,10 @@ class Services {
 
         const http = new Http(config)
         const videos = new VideosService(config, http)
+        const auth = new AuthService(config, http)
 
+        this.add('auth', auth)
         this.add('videos', videos)
-
     }
 
     add(name, service) {

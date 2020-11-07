@@ -1,5 +1,7 @@
 import {common} from './common'
 
-export default {
+const config = {
     ...common
 }
+
+export default config

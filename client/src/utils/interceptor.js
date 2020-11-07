@@ -1,3 +1,5 @@
+import storage from "./storage";
+import {TOKEN_KEY} from "../constants";
 
 /**
  * @description modify request header with authorization token/ client-id
@@ -5,7 +7,10 @@
  * @return {null}
  */
 const tokenInterceptor = request => {
-    request.headers.Authorization = `Client-ID 286fde1ed3f5f1b`;
+    const token = storage.get(TOKEN_KEY)
+    if (token && request.url.indexOf('youtube') < 0) {
+        request.headers.Authorization = `Bearer ${token}`;
+    }
     return request;
 }
 

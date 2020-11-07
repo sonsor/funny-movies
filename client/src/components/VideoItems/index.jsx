@@ -1,10 +1,16 @@
+import {useEffect} from 'react'
 import {VideoItem} from "../VideoItem/VideoItem";
-import {useVideos} from "./hook";
 import {Loading} from "../Loading";
+import videos from '../../store/modules/video'
+import {useDispatch, useSelector} from "react-redux";
 
 export const VideoItems = () => {
+    const [data, loading] = useSelector(videos.selectors.getVideos())
+    const dispatch = useDispatch()
 
-    const {videos, loading} = useVideos()
+    useEffect(()  => {
+        dispatch(videos.actions.fetchAllVideos())
+    }, [dispatch])
 
     if (loading) {
         return <Loading/>
@@ -12,7 +18,7 @@ export const VideoItems = () => {
 
     return (
         <>
-            {videos.map(item => <VideoItem key={item.id} {...item}/>)}
+            {data.map(item => <VideoItem key={item.id} {...item}/>)}
         </>
     )
 }
