@@ -4,4 +4,4 @@ export const UPDATE_TOKEN = 'UPDATE_TOKEN'
 export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE'
 export const SET_LOADING = `${ENTITY}_SET_LOADING`
 export const SET_ERROR = `${ENTITY}_SET_ERROR`
-export const USER_LOGOGUT = `${ENTITY}_LOGOUT`
+export const USER_LOGOUT = `${ENTITY}_LOGOUT`

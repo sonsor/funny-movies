@@ -1,4 +1,4 @@
-import { takeEvery, call, put, all } from 'redux-saga/effects'
+import { takeLatest, takeEvery, call, put, all } from 'redux-saga/effects'
 import user from './index'
 
 export class UserRepository {
@@ -9,7 +9,8 @@ export class UserRepository {
 
     *init() {
         yield all([
-            takeEvery(user.constants.AUTHENTICATE_USER, this.authenticate.bind(this))
+            takeEvery(user.constants.AUTHENTICATE_USER, this.authenticate.bind(this)),
+            takeLatest(user.constants.USER_LOGOUT, this.logout.bind(this))
         ])
     }
 
@@ -32,6 +33,16 @@ export class UserRepository {
             yield put(user.actions.setError(true))
         }
         yield put(user.actions.setLoading(true))
+    }
+
+    *logout() {
+        try {
+            yield call([this.services.get('auth'), 'logout'])
+            yield put(user.actions.updateToken(''))
+            yield put(user.actions.updateUserData({}))
+        } catch (e) {
+            console.log(e)
+        }
     }
 
 }
