@@ -32,16 +32,16 @@ export const ShareVideo = () => {
         setDetails({})
         const videoId = getVideoId(value)
         if (!videoId) {
-            return new Error('Invalid youtube video url!');
+            throw new Error('Invalid youtube video url!');
+            return false
         }
-
 
         try {
             const {data} = await services.get('videos').getVideo(videoId)
             setDetails(data)
         } catch (e) {
             console.log(e)
-            return new Error('Invalid youtube video url!');
+            throw new Error('Invalid youtube video url!');
         }
     }
 
