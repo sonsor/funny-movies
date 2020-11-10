@@ -8,6 +8,12 @@ export class Video extends Document {
     @Prop({ required: true })
     videoId: string
 
+    @Prop({ required: true })
+    title: string
+
+    @Prop({ required: false })
+    description: string
+
     @Prop({ default: false })
     deleted: boolean
 

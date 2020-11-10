@@ -13,7 +13,7 @@ export class AuthService {
     ) {}
 
     async validateUser(username: string, pass: string): Promise<any> {
-        let user = await this.userService.findOne(username);
+        const user = await this.userService.findOne(username);
         if (user) {
             if (compareSync(pass, user.password)) {
                 const { password, salt, ...result } = user.toObject()
@@ -22,16 +22,19 @@ export class AuthService {
                 return null
             }
         } else {
-
-            const data = new RegisterDto()
-            data.username = username
-            data.password = pass
-            user = await this.userService.create(data)
-
-            const { password, salt, ...result } = user
-            return result;
+            return await this.register(username, pass)
         }
         return null;
+    }
+
+    async register(username: string, pass: string): Promise<any> {
+        const data = new RegisterDto()
+        data.username = username
+        data.password = pass
+        const user = await this.userService.create(data)
+
+        const { password, salt, ...result } = user
+        return result;
     }
 
     async login(user: any) {

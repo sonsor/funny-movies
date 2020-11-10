@@ -17,14 +17,20 @@ export class VideosService {
         return this.videoModel.find({
             deleted: false,
             active: true
-        }, null, {
-            createdAt: -1
+        }, {
+            _id: 1,
+            title: 1,
+            description: 1,
+            sharedBy: 1,
+            videoId: 1
+        }, {
+            createdAt: 1
         }).populate('sharedBy', 'username')
     }
 
     async create(data: VideoDto, user: string): Promise<Video> {
         const video = new this.videoModel({
-            videoId: data.videoId,
+            ...data,
             sharedBy: Types.ObjectId(user)
         })
         return video.save()
