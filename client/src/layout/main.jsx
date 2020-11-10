@@ -1,33 +1,35 @@
-import {Layout, Row, Col, Divider} from 'antd';
-import {Logo} from "../components/Logo";
-import {LoginRegisterForm} from "../components/LoginRegisterForm";
-import {ShareVideo} from "../components/ShareVideo";
+import {Layout, Row, Col, Divider, Typography, Space} from 'antd';
 import {HeaderRight} from "../components/HeaderRight";
-const { Header, Footer, Content } = Layout;
+import {HomeFilled} from "@ant-design/icons";
 
-export const Main = ({ children }) => {
+const {Header, Footer, Content} = Layout;
+const {Title} = Typography
+
+export const Main = ({children}) => {
 
     return (
-        <Layout>
+        <Layout className="layout">
             <Header>
-                <Row align="middle">
-                    <Col>
-                        <Logo/>
+                <Row>
+                    <Col span={8}>
+                        <div className="logo">
+                            <Title level={3}>
+                                <HomeFilled/>
+                                <Space>FunnyMovies</Space>
+                            </Title>
+                        </div>
                     </Col>
-                    <Col offset={12}>
-                        <HeaderRight/>
-                    </Col>
+
+                    <HeaderRight/>
                 </Row>
             </Header>
-            <Content>
-                <Divider/>
-                <Row gutter={6}>
-                    <Col push={4}>
-                        {children}
-                    </Col>
-                </Row>
+            <Divider/>
+            <Content style={{padding: '0 50px'}}>
+                <div className="site-layout-content">
+                    {children}
+                </div>
             </Content>
-            <Footer />
+            <Footer/>
         </Layout>
     )
 }

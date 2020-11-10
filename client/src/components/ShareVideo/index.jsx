@@ -3,9 +3,12 @@ import {Modal, Button, Form, Input} from 'antd';
 import {getVideoId} from "../../utils/common";
 import {useDispatch, useSelector} from "react-redux";
 import video from '../../store/modules/video'
+import services from "../../services";
+import _ from 'lodash'
 
 export const ShareVideo = () => {
     const [visible, setVisible] = useState(false)
+    const [details, setDetails] = useState({})
     const shared = useSelector(video.selectors.isShared())
     const [form] = Form.useForm();
     const dispatch = useDispatch()
@@ -26,30 +29,43 @@ export const ShareVideo = () => {
     }
 
     const validate = async (rule, value) => {
+        setDetails({})
         const videoId = getVideoId(value)
-        console.log("videoId :", videoId)
         if (!videoId) {
+            return new Error('Invalid youtube video url!');
+        }
+
+
+        try {
+            const {data} = await services.get('videos').getVideo(videoId)
+            setDetails(data)
+        } catch (e) {
+            console.log(e)
             return new Error('Invalid youtube video url!');
         }
     }
 
     const onFinish = values => {
-        const { url } = values
+        const {url} = values
         const videoId = getVideoId(url)
-        dispatch(video.actions.shareVideo({
-            videoId
-        }))
+        const data = {
+            videoId,
+            title: _.get(details, 'items.0.snippet.title', ''),
+            description: _.get(details, 'items.0.snippet.description', ''),
+        }
+        dispatch(video.actions.shareVideo(data))
     }
 
     return (
-        <Form form={form} name="share-video-form" layout="inline" onFinish={onFinish}>
-            <Button type="primary" onClick={show}>
+        <>
+            <Button onClick={show} className="top-bar-item">
                 Share Video
             </Button>
             <Modal
                 title="Share Video"
                 visible={visible}
                 destroyOnClose={true}
+                closable={false}
                 footer={[
                     <Button key="back" onClick={cancel}>
                         Cacnel
@@ -65,7 +81,7 @@ export const ShareVideo = () => {
                 ]}
 
             >
-
+                <Form form={form} name="share-video-form" onFinish={onFinish}>
                     <Form.Item
                         name="url"
                         rules={[
@@ -74,11 +90,11 @@ export const ShareVideo = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="https://"/>
+                        <Input placeholder="https://" size="large"/>
                     </Form.Item>
 
-
+                </Form>
             </Modal>
-        </Form>
+        </>
     )
 }

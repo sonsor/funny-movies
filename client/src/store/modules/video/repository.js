@@ -21,23 +21,7 @@ export class VideoRepository {
                 [this.services.get('videos'), 'getVideos']
             )
 
-            const videos = _.keyBy(data, 'videoId')
-
-            const details = yield all(data.map(video => call(
-                [this.services.get('videos'), 'getVideo'],
-                video.videoId
-            )))
-
-            details.forEach(video => {
-                videos[_.get(video, 'data.items.0.id')] = {
-                    id: _.get(video, 'data.items.0.id'),
-                    title: _.get(video, 'data.items.0.snippet.title', ''),
-                    description: _.get(video, 'data.items.0.snippet.description', ''),
-                    shareBy: _.get(videos, 'shareBy.username', '')
-                }
-            })
-
-            yield put(video.actions.updateAllVideos(Object.values(videos)))
+            yield put(video.actions.updateAllVideos(data))
 
         } catch (e) {
             console.log(e)

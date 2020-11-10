@@ -7,6 +7,8 @@ import configureStore from './store'
 import {Provider} from 'react-redux'
 import state from './store/state'
 import 'antd/dist/antd.css';
+import './assets/css/general.css'
+
 const store = configureStore(state)
 
 const Root = () => {

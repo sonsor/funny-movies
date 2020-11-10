@@ -8,7 +8,7 @@ export const VideoItems = () => {
     const [data, loading] = useSelector(videos.selectors.getVideos())
     const dispatch = useDispatch()
 
-    useEffect(()  => {
+    useEffect(() => {
         dispatch(videos.actions.fetchAllVideos())
     }, [dispatch])
 
@@ -16,9 +16,5 @@ export const VideoItems = () => {
         return <Loading/>
     }
 
-    return (
-        <>
-            {data.map(item => <VideoItem key={item.id} {...item}/>)}
-        </>
-    )
+    return <>{data.map(item => <VideoItem key={item.id} {...item}/>)}</>
 }

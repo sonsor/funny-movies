@@ -10,7 +10,7 @@ export default fromJS({
         error: ''
     },
     videos: {
-        byId: {},
+        list: [],
         error: '',
         success: '',
         shared: false

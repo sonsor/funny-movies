@@ -14,12 +14,12 @@ export const LoginRegisterForm = () => {
     }, []);
 
     useEffect(() => {
-      /*  form.setFields({
-            passsword: {
-                value: '',
-                errors: [new Error('Invalid Password')],
-            },
-        })*/
+        /*  form.setFields({
+              passsword: {
+                  value: '',
+                  errors: [new Error('Invalid Password')],
+              },
+          })*/
     }, [error])
 
     const onFinish = values => {
@@ -31,54 +31,56 @@ export const LoginRegisterForm = () => {
     }
 
     return (
-        <Form form={form} name="login-register-form" layout="inline" onFinish={onFinish}>
-            <Form.Item
-                name="username"
-                rules={[
-                    {
-                        required: true,
-                        type: "email",
-                        message: 'Please input your email!',
-                    },
-                ]}
-            >
-                <Input placeholder="Email"/>
-            </Form.Item>
-            <Form.Item
-                name="password"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input your password!',
-                    },
-                    {
-                        min: 8,
-                        message: 'password must be minimum 8 characters.'
-                    },
+        <div className="text-justify-right">
+            <Form form={form} name="login-register-form" layout="inline" onFinish={onFinish}>
+                <Form.Item
+                    name="username"
+                    rules={[
+                        {
+                            required: true,
+                            type: "email",
+                            message: 'Please input your email!',
+                        },
+                    ]}
+                >
+                    <Input placeholder="Email"/>
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your password!',
+                        },
+                        {
+                            min: 8,
+                            message: 'password minimum 8 characters.'
+                        },
 
-                ]}
-            >
-                <Input
-                    type="password"
-                    placeholder="Password"
-                />
-            </Form.Item>
-            <Form.Item shouldUpdate={true}>
-                {() => (
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        disabled={
-                            !form.isFieldsTouched() ||
-                            form.getFieldsError().filter(({errors}) => errors.length).length ||
-                            loading
-                        }
-                    >
-                        Login / Register
-                        {form.getFieldsError().filter(({errors}) => errors.length).length}
-                    </Button>
-                )}
-            </Form.Item>
-        </Form>
+                    ]}
+                >
+                    <Input
+                        type="password"
+                        placeholder="Password"
+                    />
+                </Form.Item>
+                <Form.Item shouldUpdate={true}>
+                    {() => (
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            disabled={
+                                !form.isFieldsTouched() ||
+                                form.getFieldsError().filter(({errors}) => errors.length).length ||
+                                loading
+                            }
+                        >
+                            Login / Register
+                            {form.getFieldsError().filter(({errors}) => errors.length).length}
+                        </Button>
+                    )}
+                </Form.Item>
+            </Form>
+        </div>
     )
 }

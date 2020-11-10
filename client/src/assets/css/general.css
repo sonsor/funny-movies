@@ -1,0 +1,10 @@
+.top-bar-item {
+    float: left;
+    margin-right: 10px;
+}
+.text-justify-right {
+    float: right;
+}
+.ant-layout-header {
+    padding-top: 15px;
+}

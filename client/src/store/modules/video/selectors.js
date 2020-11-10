@@ -6,7 +6,12 @@ export const getVideos = () =>
     createSelector(
         VideosSelector(),
         state => [
-            Object.values(state.get('byId').toJS()),
+            state.get('list').toJS().map(video => ({
+                id: video.videoId,
+                title: video.title,
+                description: video.description,
+                sharedBy: video.sharedBy.username
+            })),
             Boolean(state.get('loading'))
         ]
     )
