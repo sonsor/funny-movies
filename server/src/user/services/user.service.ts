@@ -25,7 +25,7 @@ export class UserService {
         return this.userModel.findOne({ username })
     }
 
-    async create(data: RegisterDto): Promise<User> {
+    async create(data: RegisterDto): Promise<User | any> {
         const salt: string = genSaltSync(10)
         const user = new this.userModel({
             username: data.username,

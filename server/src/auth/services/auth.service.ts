@@ -31,9 +31,9 @@ export class AuthService {
         const data = new RegisterDto()
         data.username = username
         data.password = pass
-        const user = await this.userService.create(data)
-
-        const { password, salt, ...result } = user
+        await this.userService.create(data)
+        const user = await this.userService.findOne(username);
+        const { password, salt, ...result } = user.toObject()
         return result;
     }
 
